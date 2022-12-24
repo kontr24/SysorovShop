@@ -1,0 +1,290 @@
+﻿@model IEnumerable<SysorovShop.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+
+
+
+
+<p>
+    <a href="/Home/Index" class="button delete">Главная</a>
+    @Html.ActionLink("Добавить товар", "Insert", null, new { @class = "button delete" })
+
+    @Html.ActionLink("Список пользователей", "ListUsers", null, new { @class = "button delete" })
+
+</p>
+
+
+
+<div class="categoies">
+    <div>Категории</div>
+    <select onchange="window.location.href = this.options[this.selectedIndex].value" class="size">
+        <option value="/Admin/Index/" @((ViewBag.category == null) ? "selected" : "")>Все</option>
+        @foreach (var cat in ViewBag.Categories)
+        {
+
+            <option value="/Admin/Index/?category=@cat" @((ViewBag.category == cat) ? "selected" : "")>@cat</option>
+
+        }
+
+    </select>
+</div>
+
+
+<div class="grid-item">
+
+
+
+    @foreach (SysorovShop.Models.Product product in Model)
+    {
+        <div>
+
+            <div class="item">
+
+                @*<img src="~/Content/Images/@product.Image" width="150px" />*@
+
+                @if (product.ImageData != null)
+                {
+                    <img class="img-thumbnail" width="150" height="150"
+                         src="@Url.Action("GetImage", "Home",
+               new { product.Id })" />
+                }
+
+                <div><span>Категория: </span>@product.Category.Name</div>
+                <div><span>Бренд: </span>@product.Brand</div>
+                <div><span>Модель: </span>@product.Model</div>
+                <p class="price">@product.Price руб.</p>
+
+
+                @using (Html.BeginForm(@*"DeleteProduct", "Admin"*@))
+{
+            @*@Html.Hidden("ProductId", product.Id)*@
+            @*<input type="submit" class="button" value="Удалить" />*@
+
+
+            @Html.ActionLink("Удалить", "DeleteProduct", new { id = product.Id }, new { @class = "button" })
+            @Html.ActionLink("Редактировать", "Edit", new { id = product.Id }, new { @class = "button delete" })
+        }
+
+
+
+            </div>
+
+
+        </div>
+
+
+    }
+
+</div>
+
+@if (Model.Count() == 0)
+{<div class="NoProduct">
+        <div><span visility="hidden">В выбранной категории товар не найден</span></div>
+    </div>
+}
+
+<style>
+    .item div > span {
+        font-weight: bold;
+    }
+    /*h1 {
+                    font-size: 120%;
+                    font-family: Verdana, Arial, Helvetica, sans-serif;
+                    color: #333366;
+                }*/
+    .item {
+        border: 1px solid red;
+        width: 300px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        /*        max-width: 200px;  Ограничение ширины */
+        margin: 0px 30px 30px 0;
+        text-align: center;
+        font-family: sans-serif;
+    }
+
+        .item:hover {
+            border-color: green;
+        }
+
+    .categoies {
+        font-size: 150%;
+        /* border: 3px solid black;*/
+        width: 300px;
+        /*  border-radius: 5px;*/
+        margin: 30px 30px 30px 0px;
+        color: transparent;
+        background: #666666;
+        color: #333333;
+        background: #FFFFFF;
+        text-shadow: 2px 2px 0px #FFFFFF, 5px 4px 0px rgba(0,0,0,0.15);
+        color: #333333;
+        background: #FFFFFF;
+    }
+
+    .grid-item {
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+
+    .button {
+        border: none;
+        outline: 0;
+        padding: 9px;
+        color: #fff;
+        background-color: #f44336;
+        text-align: center;
+        cursor: pointer;
+        /*width: 100%;*/
+        font-size: 16px;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0px 0px 10px 10px;
+    }
+
+    .delete {
+        background-color: #36bb2d;
+    }
+
+    .price {
+        color: #d32f2f;
+        font-size: 18px;
+    }
+
+    .categoies {
+        margin: 0px 0px 10px 10px;
+    }
+
+    .size {
+        font-size: 25px;
+    }
+
+    .NoProduct {
+        font-size: 50px;
+        margin: 300px 0 600px 600px;
+        color: rgba(0,0,0,0.5);
+    }
+</style>
+
+
+
+
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Power)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiskDiameter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiameterHole)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Revs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MainsVoltage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Weight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaximumImpact)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoiseLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dimensions)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category.Name)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Image)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Power)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiskDiameter)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiameterHole)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Revs)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MainsVoltage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Weight)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaximumImpact)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoiseLevel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dimensions)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>*@

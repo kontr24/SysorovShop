@@ -1,0 +1,213 @@
+﻿@model SysorovShop.Models.User
+
+@{
+    ViewBag.Title = "InsertUser";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="panel-heading">
+    <h2>Добавление нового пользователя</h2>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="productFont">Имя</label>
+            <div class="col-md-10">
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "purchase" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="productFont">Фамилия</label>
+            <div class="col-md-10">
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "purchase" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="productFont">Адрес электронной почты</label>
+            <div class="col-md-10">
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "purchase" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="productFont">Логин</label>
+            <div class="col-md-10">
+                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "purchase" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="productFont">Пароль</label>
+            <div class="col-md-10">
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "purchase", @id = "passwordTextBox", @type = "password" } })
+                <div>
+                    <a class='button1' href='#' onclick='toggleShowPassword(); return false;'>
+                        Показать/Скрыть пароль
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="productFont">Повторите пароль</label>
+            <div class="col-md-10">
+                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "purchase", @id = "passwordTextBox1", @type = "password" } })
+                <div>
+                    <a class='button1' href='#' onclick='toggleShowPassword1(); return false;'>
+                        Показать/Скрыть пароль
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="productFont">Статус</label>
+            <div class="col-md-10">
+
+                @*@Html.DropDownList("categor", Model.Status as SelectList, htmlAttributes: new { @class = "form-control" })*@
+
+
+
+                @*@Html.DropDownListFor(n => n.StatusID, new SelectList(User, "ColorId", "Name"))*@
+
+                @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.StatusID, new SelectList(new List<Object>{new { value = "", text = "Пользователь"  },
+               new { value = 1 , text = "Администратор"}
+
+                    },
+                    "value",
+                    "text",
+                    Model.StatusID), new { @class = "purchase" })
+
+
+
+                @*@Html.EditorFor(model => model.StatusID, new { htmlAttributes = new { @class = "purchase" } })*@
+
+
+
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("Отмена", "ListUsers", null, new { @class = "delete" })
+                <input type="submit" value="Сохранить" class="button" />
+            </div>
+        </div>
+    </div>
+}
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+    function toggleShowPassword() {
+        var passwordTextBox = document.getElementById('passwordTextBox');
+        if (passwordTextBox.getAttribute('type') == 'text') {
+            passwordTextBox.type = 'password';
+        }
+        else {
+            passwordTextBox.type = 'text';
+        }
+    }
+
+    function toggleShowPassword1() {
+        var passwordTextBox = document.getElementById('passwordTextBox1');
+        if (passwordTextBox.getAttribute('type') == 'text') {
+            passwordTextBox.type = 'password';
+        }
+        else {
+            passwordTextBox.type = 'text';
+        }
+    }
+</script>
+
+
+<style>
+    .text-danger 
+    {
+        color:red;
+    }
+    .button1 {
+        line-height: 100%;
+        display: inline-block;
+        padding: 7px 15px;
+        background: #6eddff;
+        text-decoration: none;
+        color: black;
+        border-radius: 6px;
+    }
+
+        .button1:active,
+        .button1:hover {
+            background: #3d9dba;
+            color: white;
+        }
+
+
+
+
+
+    .productFont {
+        font-size: 22px;
+    }
+
+    .purchase {
+        margin: 0px 0px 10px 0px;
+        height: 30px;
+        width: 1900px;
+        font-size: 14px;
+    }
+
+    .button {
+        border: none;
+        outline: 0;
+        padding: 9px;
+        color: #fff;
+        background-color: #36bb2d;
+        text-align: center;
+        cursor: pointer;
+        /*width: 100%;*/
+        font-size: 22px;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0px 0px 10px 40px;
+    }
+
+    .delete {
+        border: none;
+        outline: 0;
+        padding: 9px;
+        color: #fff;
+        background-color: #f44336;
+        text-align: center;
+        cursor: pointer;
+        /*width: 100%;*/
+        font-size: 22px;
+        text-decoration: none;
+        display: inline-block;
+        margin: 15px 0px 10px 800px;
+    }
+</style>

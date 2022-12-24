@@ -1,0 +1,822 @@
+﻿@using SysorovShop.Models
+@model SysorovShop.Models.FilteringProducts
+
+@{
+    ViewBag.Title = "SysorovShop";
+    Cart cart = (Cart)Session["Cart"];
+
+
+}
+
+@*@Session["Test"]
+    <div class="jumbotron">
+        @if (cart != null)
+        {
+            foreach (var item in cart.Items)
+            {
+                <p>@item</p>
+            }
+            <hr>
+            <p><b>@cart</b></p>
+        }
+    </div>*@
+
+
+@*<form medhod="get">
+        <label>Бренд:</label>
+
+            @Html.DropDownList("brand", Model.Parameters as SelectList, htmlAttributes: new { @class = "" })
+
+        <label>Параметр:</label>
+
+            @Html.DropDownList("parameters", ViewData["parameters"] as SelectList, htmlAttributes: new { @class = "" })
+
+        <input type="submit" value="Фильтр"> class = ""/>
+    </form>*@
+
+
+@*<form>
+        <input type="">
+    </form>*@
+
+
+
+@*<a tabindex=myprog:run>Запустить приложение</a>*@
+
+@*<script language="javascript">
+    var WshShell = new ActiveXObject("WScript.Shell");
+    WshShell.Run("notepad", 2);
+</script>
+<a href="s2x:" onclick="window.open('s2x:run')">Foo</a>*@
+
+
+
+@*<script type="text/javascript">
+    function runProgram()
+    var shell = new ActiveXObject("WScript.Shell");
+    var appWinMerge = "\"D:\\AZUS_Transport.exe\" ";
+
+    shell.Run(appWinMerge);
+ }
+</script>
+    <a href="javascript:runProgram()">Run program</a>*@
+
+
+    @if (@*Model.Products.Count() != 0 &&*@ ViewBag.category == null)
+{ <form method="get">
+    <div class="form-inline">
+        <div class="filtering">
+            Фильтры
+        </div>
+        <label class="control-label">Категория</label>
+
+        @*<label class="control-label">Категория</label>*@
+
+        @Html.DropDownList("categor", Model.Categories as SelectList, htmlAttributes: new { @class = "form-control", @onchange = "callCangenfunc(this.value)" })
+
+        <label class="control-label">Бренд</label>
+        @Html.DropDownList("brand", Model.Brands as SelectList, htmlAttributes: new { @class = "form-control" })
+
+
+        @*<label class="control-label">Сортировка по бренду:</label>
+            @Html.DropDownList("sortBrand", Model.SortBrand as SelectList, htmlAttributes: new { @class = "form-control" })
+
+            <label class="control-label">Сортировка по цене:</label>
+            @Html.DropDownList("sortPrice", Model.SortPrice as SelectList, htmlAttributes: new { @class = "form-control" })*@
+
+
+        @if (ViewBag.categor == null || ViewBag.categor == 0)
+        {
+            <label class="prices">Цена</label>
+            <input type="number" name="minPrice" value="" max="100000" onfocus="this.value=''" placeholder="от 1000" />
+            <input type="number" name="maxPrice" value="" max="100000" onfocus="this.value=''" placeholder="до 100000" />
+
+            <input type="submit" value="Показать" class="button1" />
+        }
+
+        @*<label class="control-label">Модель</label>
+            @Html.DropDownList("models", Model.Models as SelectList, htmlAttributes: new { @class = "form-control" })*@
+
+
+        @if (ViewBag.categor == 1@*ViewBag.diskDiameter != null*@)
+{
+
+<label class="prices">Мощность</label>
+@Html.DropDownList("power", Model.Powers as SelectList, htmlAttributes: new
+{
+    @class = "form-control"@*@onchange = "diskDiameterFunc(this.value)"*@}) <label>Вт</label>
+
+<label class="prices">Диаметр диска</label>
+@Html.DropDownList("diskDiameter", Model.DiskDiameter as SelectList, htmlAttributes: new
+{
+    @class = "form-control"@*@onchange = "diskDiameterFunc(this.value)"*@}) <label>мм</label>
+
+<label class="prices">Диаметр посадочного отверстия</label>
+@Html.DropDownList("diameterHole", Model.DiameterHoles as SelectList, htmlAttributes: new
+{
+    @class = "form-control"@*@onchange = "diskDiameterFunc(this.value)"*@}) <label>мм</label>
+
+<label class="prices">Цена</label>
+<input type="number" name="minPrice" value="" min="1000" max="100000" onfocus="this.value=''" placeholder="от 1000" @*id="txt_1" onkeyup='saveValue(this);'*@ />
+<input type="number" name="maxPrice" value="" min="1000" max="100000" onfocus="this.value=''" placeholder="до 100000" @*id="txt_2" onkeyup='saveValue(this);'*@ />
+
+<input type="submit" value="Показать" class="button1" />
+
+}
+        @if (ViewBag.categor == 2)
+        {
+            <label class="prices">Максимальное число оборотов</label>
+            @Html.DropDownList("revs", Model.Revs as SelectList, htmlAttributes: new
+            {
+                @class = "form-control"@*@onchange = "mainsVoltageFunc(this.value)"*@}) <label>об/мин</label>
+
+            <label class="prices">Напряжение сети</label>
+            @Html.DropDownList("mainsVoltage", Model.MainsVoltage as SelectList, htmlAttributes: new
+            {
+                @class = "form-control"@*@onchange = "mainsVoltageFunc(this.value)"*@}) <label>В</label>
+            <label class="prices">Вес</label>
+            @Html.DropDownList("weight", Model.Weight as SelectList, htmlAttributes: new
+            {
+                @class = "form-control"@*@onchange = "mainsVoltageFunc(this.value)"*@}) <label>кг</label>
+
+            <label class="prices">Цена</label>
+            <input type="number" name="minPrice" value="" min="1000" max="100000" onfocus="this.value=''" placeholder="от 1000" @*id="txt_1" onkeyup='saveValue(this);'*@ />
+            <input type="number" name="maxPrice" value="" min="1000" max="100000" onfocus="this.value=''" placeholder="до 100000" @*id="txt_2" onkeyup='saveValue(this);'*@ />
+
+            <input type="submit" value="Показать" class="button1" />
+
+        }
+
+        @if (ViewBag.categor == 3)
+        {
+            <label class="prices">Максимальная энергия удар</label>
+            @Html.DropDownList("maximumImpact", Model.MaximumImpacts as SelectList, htmlAttributes: new
+            {
+                @class = "form-control"@*, @onchange = "noiceLevelFunc(this.value)"*@}) <label>Дж</label>
+
+            <label class="prices">Уровень шума</label>
+            @Html.DropDownList("noiceLevel", Model.NoiceLevel as SelectList, htmlAttributes: new
+            {
+                @class = "form-control"@*, @onchange = "noiceLevelFunc(this.value)"*@}) <label>дБ</label>
+            <label class="prices">Габариты</label>
+            @Html.DropDownList("dimensions", Model.Dimensions as SelectList, htmlAttributes: new
+            {
+                @class = "form-control"@*, @onchange = "noiceLevelFunc(this.value)"*@}) <label>мм</label>
+
+            <label class="prices">Цена</label>
+            <input type="number" name="minPrice" value="" min="1000" max="100000" onfocus="this.value=''" placeholder="от 1000" @*id="txt_1" onkeyup='saveValue(this);'*@ />
+            <input type="number" name="maxPrice" value="" min="1000" max="100000" onfocus="this.value=''" placeholder="до 100000" @*id="txt_2" onkeyup='saveValue(this);'*@ />
+
+            <input type="submit" value="Показать" class="button1" />
+
+        }
+
+
+    </div>
+    <label class="control-label">Сортировка:</label>
+    @Html.DropDownList("sortBrandAndPrice", Model.SortBrandAndPrice as SelectList, htmlAttributes: new { @class = "sortBrandAndPrice" })
+
+</form>
+}
+
+
+    <script>
+    function callCangenfunc(val) { window.location.href = "/Home/Index?categor=" + val };
+    function diskDiameterFunc(val) { window.location.href = "/Home/Index?categor=" + @ViewBag.categor+"&diskDiameter=" + val };
+    function mainsVoltageFunc(val) { window.location.href = "/Home/Index?categor=" + @ViewBag.categor+"&mainsVoltage=" + val  };
+    function noiceLevelFunc(val) { window.location.href = "/Home/Index?categor=" + @ViewBag.categor+"&noiceLevel=" + val  };
+
+
+
+    document.getElementById("txt_1").value = getSavedValue("txt_1");
+    document.getElementById("txt_2").value = getSavedValue("txt_2");
+
+    function saveValue(e) {
+        var id = e.id;
+        var val = e.value;
+        localStorage.setItem(id, val);
+    }
+
+    function getSavedValue(v) {
+        if (localStorage.getItem(v) === null) {
+            return "";
+        }
+        return localStorage.getItem(v);
+    }
+
+    </script>
+
+
+
+
+    @if (Model.Products.Count() != 0)
+    {
+        @*<div class="filter">
+                Фильтрация
+            </div>
+            <select onchange="window.location.href = this.options[this.selectedIndex].value">
+
+                @foreach (var cat in ViewBag.Categories)
+                {
+
+
+
+                    <option value="/Home/Index/?category=@cat" @((ViewBag.category == cat) ? "selected" : "")>@cat</option>
+
+                }
+
+            </select>
+
+            if (ViewBag.category == "Перфораторы")
+
+            {
+
+                <select onchange="window.location.href = this.options[this.selectedIndex].value">
+
+                    @foreach (var par in ViewBag.parameters)
+                    {
+
+                        <option value="/Home/Index/?parameters=@par" @((ViewBag.parameter == par) ? "selected" : "")>@par</option>
+
+                    }
+                </select>
+            }
+
+            <form>
+                <input type="number" name="minPrice">
+                <input type="number" name="maxPrice">
+                <button>
+                    Отправить
+                </button>
+            </form>*@
+
+
+        <div class="sort">
+            @if (ViewBag.categor == null || ViewBag.categor == 0)
+            {
+                <div>Сортировать по:</div>
+                if (ViewBag.category != null)
+                {
+                    <a href="/Home/Index/?category=@ViewBag.category&sortOrder=@ViewData["NameSortParm"]">
+
+                        @if (ViewBag.sortOrder == null || ViewBag.sortOrder == "Price" || ViewBag.sortOrder == "price_desc")
+                        {<span>Бренд ⇅</span>}
+
+                        @if (ViewBag.sortOrder == "")
+                        {
+
+                            <span>Бренд ↑</span>
+
+                        }
+                        @if (ViewBag.sortOrder == "name_desc")
+                        {
+                            <label>Бренд ↓</label>
+                        }
+                    </a>
+
+                    <a href="/Home/Index/?category=@ViewBag.category&sortOrder=@ViewData["PriceSort"]">
+                        @if (ViewBag.sortOrder == null || ViewBag.sortOrder == "name_desc" || ViewBag.sortOrder == "")
+                        {<span>Цена ⇅</span>}
+
+                        @if (ViewBag.sortOrder == "Price")
+                        {
+                            <span>Цена ↑</span>
+                        }
+                        @if (ViewBag.sortOrder == "price_desc")
+                        {
+                            <span>Цена ↓</span>
+                        }
+
+
+                    </a>
+
+                }
+
+
+                else
+                {
+                    <a href="/Home/Index/?sortOrder=@ViewData["NameSortParm"]">
+
+                        @if (ViewBag.sortOrder == null || ViewBag.sortOrder == "Price" || ViewBag.sortOrder == "price_desc")
+                        {<span>Бренд ⇅</span>}
+
+                        @if (ViewBag.sortOrder == "")
+                        {
+
+                            <span>Бренд ↑</span>
+
+                        }
+                        @if (ViewBag.sortOrder == "name_desc")
+                        {
+                            <label>Бренд ↓</label>
+                        }
+
+                    </a>
+
+                    <a href="/Home/Index/?sortOrder=@ViewData["PriceSort"]">
+                        @if (ViewBag.sortOrder == null || ViewBag.sortOrder == "name_desc" || ViewBag.sortOrder == "")
+                        {<span>Цена ⇅</span>}
+
+                        @if (ViewBag.sortOrder == "Price")
+                        {
+                            <span>Цена ↑</span>
+                        }
+                        @if (ViewBag.sortOrder == "price_desc")
+                        {
+                            <span>Цена ↓</span>
+                        }
+
+
+                    </a>
+                }
+            }
+        </div>
+
+    }
+
+
+
+
+    @if (Model.Products.Count() == 0)
+    {<div class="NoProduct">
+            <div><span visility="hidden">Товара нет в наличии </span></div>
+        </div>
+    }
+
+
+    @*<form method="get">
+            <div class="form-inline">
+                <label class="control-label">Команда: </label>
+                @foreach (SysorovShop.Models.Product product in Model)
+                {
+                    @Html.DropDownList("parameters", product.Categories as SelectList,
+                                     htmlAttributes: new { @class = "form-control" })
+                }
+                <label class="control-label">Позиция игрока: </label>
+                @foreach (SysorovShop.Models.Product product in Model)
+                {
+                    @Html.DropDownList("brand", product.Brands as SelectList,
+                            htmlAttributes: new { @class = "form-control" })
+                }
+
+                <input type="submit" value="Фильтр" class="btn btn-default" />
+            </div>
+        </form>*@
+
+    @*<div>
+            <span><a href="/Home/Index/?category=Болгарка">Болгарки</a></span>
+        </div>*@
+    @*<div>
+            <span><a href="/Home/Index/?category=Дрель">Дрели</a></span>
+        </div>
+        <div>
+            <span><a href="/Home/Index/?category=Перфоратор">Перфораторы</a></span>
+        </div>*@
+
+
+    @if (Model.Products.Count() != 0)
+    {
+        <div class="categoies">
+
+            <div><span>Товары в наличии</span></div>
+        </div>
+    }
+
+
+
+    <div class="grid-item">
+
+
+
+        @foreach (var product in Model.Products)
+        {
+            @*<table border="1">
+                <tr>
+                    <td>*@
+            @*if (string.IsNullOrWhiteSpace(product.Brand))
+                { <div><span>Категория: </span>@product.Categorie</div>}*@
+            <div>
+
+                <div class="item">
+
+                    @*<details>
+                        <summary>@product.Brand</summary>*@
+
+                    @*<img src="~/Content/Images/@product.Image" width="250px" />*@
+
+                    @if (product.ImageData != null)
+                    {
+                        <img class="img-thumbnail" width="250" height="250"
+                             src="@Url.Action("GetImage", "Home",
+               new { product.Id })" />
+                    }
+
+
+
+                    <div><span>Категория: </span>@product.Category.Name</div>
+                    <div><span>Бренд: </span>@product.Brand</div>
+                    <div><span>Модель: </span>@product.Model</div>
+                    <p class="price">@product.Price руб.</p>
+
+                    @Html.ActionLink("Подробнее", "Product", "Home", new { Id = product.Id }, null)
+                    @*@Html.ActionLink(product.Model, "Product", "Home", new {Id = product.Id },new { @class = "product" })*@
+
+                    <!--<button>
+                    В корзину-->
+                    @*@using (Html.BeginForm("Lo", "Cart"))
+                        {*@
+
+                    @*}*@
+
+
+
+                    <!--</button>-->
+                    @*
+                        @using (Html.BeginForm("AddToCart", "Cart")) // создаёт форму, которая использует HTTP-метод POST
+                        {*@
+
+                    @*
+                        @Html.HiddenFor(x => product.Id)
+                        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                        @*<p><input type="submit" value  ="отправить"/></p>*@
+                    @*<button>
+                            В корзину
+                        </button>*@
+
+
+                    @*<form action="@Url.Action("AddToCart", "Cart", new { id = product.Id })">
+                            <button type="submit" class="button">Hello</button>
+                        </form>*@
+
+
+
+                    @*<form id="myform" action="/Cart/AddToCart" method="post">
+                            <input type="number" name="quantity">
+                            @Html.ActionLink("В корзину", "AddToCart", "Cart", new { Id = product.Id, categoryName = ViewBag.category, returnUrl = Request.Url.PathAndQuery }, new { @class = "button" })
+                        </form>
+                        <form action="/Cart/AddToCart" method="get">
+                            <input type="number" name="quantity">
+                            @Html.ActionLink("В корзину", "AddToCart", "Cart", new { Id = product.Id, categoryName = ViewBag.category, returnUrl = Request.Url.PathAndQuery }, new { @class = "button" })
+                        </form>*@
+
+
+                    @*<div class="button">
+                            @Html.ActionLink("В корзину", "AddToCart", "Cart", new { Id = product.Id, categoryName = ViewBag.category, returnUrl = Request.Url.PathAndQuery }, new { @class = "button" })
+                        </div>*@
+
+
+                    @using (Html.BeginForm("AddToCart", "Cart", new { Id = product.Id, categoryName = ViewBag.category, returnUrl = Request.Url.PathAndQuery }))
+                    {
+                        <span class="input-number ">
+
+                            <input id="amount" type="number" min="1" max="100000" name="quantity" value="1" class="form-control form-number ">
+
+                            @*<span class="btn-count btn-count-plus" value="+" onClick="change('amount',1,100, 1);">+</span>
+                                <span class="btn-count btn-count-minus" value="-" onClick="change('amount',1,100,-1);">-</span>*@
+
+                            <input type="submit" value="В корзину" class="button" />
+                        </span>
+
+                    }
+
+
+
+
+                </div>
+
+
+            </div>
+
+
+        }
+
+
+
+    </div>
+
+
+
+    <script>
+        function change(objName, min, max, step) {
+            var obj = document.getElementById(objName);
+            var tmp = +obj.value + step;
+            if (tmp < min) tmp = min;
+            if (tmp > max) tmp = max;
+            obj.value = tmp;
+        }
+    </script>
+
+
+
+
+    <style>
+        .input-number {
+            position: relative;
+            display: inline-block;
+        }
+
+        .form-control.form-number {
+            width: 110px;
+            margin-right: 12px;
+            border: 1px solid transparent;
+            text-align: center;
+            height: 36px;
+            float: left;
+            background: #ccc;
+        }
+
+        .btn-count-minus {
+            bottom: 0;
+        }
+
+        .btn-count-plus {
+            top: 0;
+        }
+
+        .btn-count {
+            position: absolute;
+            right: 0;
+            width: 30px;
+            height: 50%;
+            background: #60a645;
+            border-radius: 0;
+            text-align: center;
+            line-height: 25px;
+            font-size: 14px;
+            color: #fff;
+            z-index: 9999;
+            cursor: pointer;
+        }
+
+        .btn-default {
+            font-size: 14px;
+            color: rgb(255, 255, 255);
+            font-weight: bold;
+            text-transform: uppercase;
+            vertical-align: top;
+            display: inline-block;
+            background-color: rgb(96, 166, 69);
+            padding: 0 30px;
+            border-radius: 3px;
+        }
+
+            .btn-default:hover {
+                background-color: #7ad258;
+            }
+
+        .btn-default {
+            height: 50px;
+            line-height: 50px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+
+
+
+
+
+    <style>
+        .sortBrandAndPrice {
+            margin: 15px 0px 0px 20px;
+        }
+
+        .item div > span {
+            font-weight: bold;
+        }
+        /*h1 {
+                        font-size: 120%;
+                        font-family: Verdana, Arial, Helvetica, sans-serif;
+                        color: #333366;
+                    }*/
+        .item {
+            border: 1px solid red;
+            width: 300px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            /*        max-width: 200px;  Ограничение ширины */
+            margin: 0px 30px 30px 0;
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+            .item:hover {
+                border-color: green;
+            }
+
+        .categoies {
+            font-size: 150%;
+            /* border: 3px solid black;*/
+            width: 300px;
+            /*  border-radius: 5px;*/
+            margin: 30px 30px 30px 0px;
+            color: transparent;
+            background: #666666;
+            color: #333333;
+            background: #FFFFFF;
+            text-shadow: 2px 2px 0px #FFFFFF, 5px 4px 0px rgba(0,0,0,0.15);
+            color: #333333;
+            background: #FFFFFF;
+        }
+
+        .grid-item {
+            display: inline-flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+
+
+        p {
+            padding: 4px;
+            font-size: 14px;
+            color: #757575;
+        }
+
+        .price {
+            color: #d32f2f;
+            font-size: 18px;
+        }
+
+        .prices {
+            margin: 0px 0px 0px 10px;
+        }
+
+        .button {
+            border: none;
+            outline: 0;
+            padding: 9px;
+            color: #fff;
+            background-color: #f44336;
+            text-align: center;
+            cursor: pointer;
+            /*width: 100%;*/
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+
+        .button1 {
+            border: none;
+            outline: 0;
+            padding: 3px;
+            color: #fff;
+            background-color: #f44336;
+            text-align: center;
+            cursor: pointer;
+            /*width: 100%;*/
+            font-size: 16px;
+            text-decoration: none;
+            margin: 15px 0px 0px 0px;
+        }
+
+        .NoProduct {
+            font-size: 30px;
+            margin: 450px 0 600px 850px;
+            color: rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            margin: 10px 0 10px 650px;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 30px;
+            letter-spacing: 2px;
+            word-spacing: 2px;
+            color: #000000;
+            font-weight: 700;
+            text-decoration: underline solid rgb(68, 68, 68);
+            font-style: italic;
+            font-variant: small-caps;
+            text-transform: uppercase;
+            color: #FFFFFF;
+            background: #232323;
+            text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px #49ff18, 0 0 30px #49FF18, 0 0 40px #49FF18, 0 0 55px #49FF18, 0 0 75px #49ff18;
+            color: #FFFFFF;
+            background: #232323;
+        }
+
+        .filtering {
+            margin: 0px 0px 20px 0px;
+            text-decoration: none;
+            font-size: 120%;
+        }
+
+
+        .sort {
+            margin: 30px 0px 0px 0px;
+        }
+
+            .sort > a {
+                margin: 30px 10px 10px 0px;
+                text-decoration: none;
+                font-size: 120%;
+            }
+
+            .sort > div {
+                margin: 30px 10px 10px 0px;
+                text-decoration: none;
+                font-size: 120%;
+            }
+
+        .search {
+            border: none;
+            outline: 0;
+            padding: 0.02px;
+            color: #fff;
+            background-color: #f44336;
+            text-align: center;
+            cursor: pointer;
+            /*       width: 100%;*/
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+
+
+        #content {
+            width: 1000px;
+            margin: 50px auto 0px;
+        }
+
+        #nav {
+            font-family: 'Open Sans', arial;
+        }
+
+            #nav li {
+                float: left; /* все ссылки идут слева на право */
+                position: relative;
+                list-style: none; /* убираем точки */
+                background: #ff3131;
+                width: 190px;
+            }
+
+            #nav a {
+                text-decoration: none;
+                display: block; /* делаем блочным элементов тег "a" */
+                padding: 10px 65px;
+                color: #ffffff;
+            }
+
+            #active a, #nav li:hover > a {
+                background: #b32424;
+            }
+
+            #nav ul {
+                visibility: hidden; /* скрываем выпадающее меню */
+                padding: 0;
+                position: absolute;
+            }
+
+            #nav li:hover > ul {
+                visibility: visible; /* показываем выпадающее меню при наведении */
+                position: relative;
+            }
+
+            #nav ul a {
+                padding: 18.5px 65px; /* делаем отступы выпадающего меню меньше от основного */
+            }
+
+            #nav ul li:hover {
+                background: #d92a2a;
+            }
+
+            #nav li:first-child:hover > ul {
+                left: 0px; /* при наведении на первый элемент чтобы не съежало выпадающее меню */
+            }
+
+            #nav > li {
+                border-right: 2px solid #d92a2a; /* добавляем рамку к основному меню справа */
+            }
+
+                #nav > li:last-child {
+                    border-right: none; /* убираем рамку справа основного меню */
+                }
+
+                #nav > li ul li {
+                    border-left: 2px solid #d92a2a; /* добавляем рамку к выпадающему меню слева */
+                    border-right: 2px solid #d92a2a; /* добавляем рамку к выпадающему меню справа */
+                }
+
+            #nav li:first-child ul li, #nav li:first-child ul {
+                border-left: none; /* убираем рамку у выпадающего меню слева */
+            }
+
+            #nav li:last-child ul li, #nav li:last-child ul {
+                border-right: none; /* убираем рамку у выпадающего меню справа */
+            }
+
+            #nav li:hover > ul {
+                left: -2px; /* смещаем выпадающее меню слева от размера рамки*/
+            }
+    </style>
+
+    @*<script>
+            if (@product.Power == 0)
+            {
+
+            }
+        </script>*@
+
+

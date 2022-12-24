@@ -1,0 +1,157 @@
+﻿
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                @*<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                <h1>Магазин электроинструментов</h1>
+
+                <div id="content">
+                    <ul id="nav">
+
+                        <li><a href="/Home/Index">Главная</a></li>
+
+                        @foreach (var cat in ViewBag.Categories)
+                        {
+                            <li>
+                                <a href="/Home/Index/?category=@cat" @*@(ViewBag.category == cat)*@>@cat</a>
+                                @*<ul>
+                        </ul>*@
+                            </li>
+                        }
+
+
+                    </ul>
+                </div>
+
+
+                @using (Html.BeginForm())
+                {
+                    <div class="search">
+                        <p>
+                            @*Поиск:*@ @Html.TextBox("SearchString")
+
+                            <input type="submit" value="Поиск" class="search" />
+                        </p>
+
+                    </div>
+                }
+
+                @if (Session["Status"] != null)
+                {
+
+                    <div class="registration"> @Html.ActionLink("Администрирование", "Index", "Admin") </div>
+
+                }
+                @if (Session["UserId"] == null)
+                {
+                    <div class="registration"> @Html.ActionLink("Регистрация", "Register", "Account") </div>
+
+                    <div class="registration">
+                        @Html.ActionLink("Вход", "Login", "Account")
+                    </div>
+                }
+
+             
+                @if (Session["UserId"] != null)
+                {
+                    <div class="registration">
+
+                        <h4>Пользователь: @Session["LastName"].ToString() @Session["FirstName"].ToString()  </h4>
+                        @Html.ActionLink("Выход", "AccountExit", "Account")
+                    </div>
+                }
+                @*@if (Session["Name"] == null)
+        {*@
+                @Html.Action("Summary", "Cart")
+                @*}*@
+
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Сысоров Сергей Николаевич, ИСТ-41</p>
+        </footer>
+    </div>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+<style>
+    h4 {
+        margin: 0px 0px 10px 0px
+    }
+    /*.navbar-right button {
+            float: right !important;
+            margin: 0px 0px 0px 100px;
+            border: none;
+            outline: 0;
+            padding: 10px;
+            color: #fff;
+            background-color: #ADFF2F;
+            text-align: right;
+            cursor: pointer;*/
+    /* width: 100%;*/
+    /*font-size: 18px;
+        }*/
+    .navbar-right {
+        float: right !important;
+        text-decoration: none;
+        border: none;
+        outline: 0;
+        padding: 5px;
+        /*    color: #fff;*/
+        /* background-color: #f44336;*/
+        text-align: right;
+        cursor: pointer;
+        /*width: 100%;*/
+        font-size: 18px;
+    }
+
+    .search {
+        border: none;
+        outline: 0;
+        padding: 0.02px;
+        color: #fff;
+        background-color: #f44336;
+        text-align: center;
+        cursor: pointer;
+        /*       width: 100%;*/
+        font-size: 18px;
+        text-decoration: none;
+    }
+
+    .registration {
+        text-decoration: none;
+        text-align: right;
+        font-size: 20px;
+    }
+
+</style>

@@ -1,0 +1,320 @@
+﻿@model SysorovShop.Models.Product
+
+@{
+    ViewBag.Title = "Insert";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="panel">
+    <div class="panel-heading">
+        <h2>Добавление товара</h2>
+    </div>
+
+    @using (Html.BeginForm("Insert", "Admin",
+FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {<div class="panel-body">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+         <div>
+             <label class="productFont">Бренд</label>
+
+             <div>  @Html.ValidationMessageFor(model => model.Brand, "", new { @class = "text-danger" })</div>
+             @Html.TextBoxFor(x => x.Brand, new { @class = "purchase" })
+             <div>
+                 <label class="productFont">Модель</label>
+                 <div>  @Html.ValidationMessageFor(model => model.Model, "", new { @class = "text-danger" })</div>
+                 @Html.TextBoxFor(x => x.Model, new { @class = "purchase" })
+             </div>
+             <div>
+                 <label class="productFont">Описание</label>
+                 <div>  @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })</div>
+                 @Html.TextBoxFor(x => x.Description, null, new { @class = "Description", rows = 5 })
+             </div>
+
+             <div>
+                 <div class="form-group">
+                     <div style="position:relative;">
+                         <label class="productFont">Изображение</label>
+
+                         <a class='btn' href=''>
+
+                             Выберите файл...
+
+                             <input type="file" name="Image" size="10000" id="files" multiple
+                                    style="position:absolute;z-index:2;top:0;
+                                left:0;filter: alpha(opacity=0); opacity:0;
+                                background-color:transparent;color:transparent;"
+                                    onchange='$("#upload-file-info").html($(this).val());'>
+                         </a>
+                         <span class='label label-info' id="upload-file-info"></span>
+                     </div>
+                     @if (Model.ImageData == null)
+                     {
+                         <div class="form-control-static">Нет картинки</div>
+                     }
+                     else
+                     {
+                         <img class="img-thumbnail" width="200" height="200"
+                              src="@Url.Action("GetImage", "Home",
+                        new { Model.Id })" />
+                     }
+                 </div>
+
+                 <label class="productFont">Выбранное изображение</label>
+                 <div></div>
+               
+                 <output id="list"></output>
+
+
+
+
+                 @*@Html.TextBoxFor(x => x.Image, new { @class = "purchase" })*@
+             </div>
+             <div>
+                 <label class="productFont">Цена (руб.)</label>
+                 <div>  @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })</div>
+                 @Html.TextBoxFor(x => x.Price, new { @class = "purchase" })
+             </div>
+
+             <div>
+                 <label class="productFont">Категория</label>
+
+
+                 <div>  @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })</div>
+                 @Html.DropDownListFor(
+     model => model.CategoryId, Model.Categories as SelectList, htmlAttributes: new { @class = "purchase", @onchange = "showBlock(this.value)" })
+
+
+                 <div id="id1">
+                     <div>
+                         <label class="productFont">Мощность (Вт)</label>
+                         @Html.TextBoxFor(x => x.Power, new { @class = "purchase" })
+                     </div>
+                     <div>
+                         <label class="productFont">Максимальный диаметр диска (мм)</label>
+                         @Html.TextBoxFor(x => x.DiskDiameter, new { @class = "purchase" })
+                     </div>
+                     <div>
+                         <label class="productFont">Диаметр посадочного отверстия (мм)</label>
+                         @Html.TextBoxFor(x => x.DiameterHole, new { @class = "purchase" })
+                     </div>
+                 </div>
+                 <div id="id2">
+                     <div>
+                         <label class="productFont">Максимальные обороты (об/мин)</label>
+                         @Html.TextBoxFor(x => x.Revs, new { @class = "purchase" })
+                     </div>
+                     <div>
+                         <label class="productFont">Напряжение сети (В)</label>
+                         @Html.TextBoxFor(x => x.MainsVoltage, new { @class = "purchase" })
+                     </div>
+                     <div>
+                         <label class="productFont">Вес (кг)</label>
+                         @Html.TextBoxFor(x => x.Weight, new { @class = "purchase" })
+                     </div>
+                 </div>
+                 <div id="id3">
+                     <div>
+                         <label class="productFont">Максимальная энергия удара (Дж)</label>
+                         @Html.TextBoxFor(x => x.MaximumImpact, new { @class = "purchase" })
+                     </div>
+                     <div>
+                         <label class="productFont">Уровень шума (дБ)</label>
+                         @Html.TextBoxFor(x => x.NoiseLevel, new { @class = "purchase" })
+                     </div>
+                     <div>
+                         <label class="productFont">Габариты упакованного товара (ДxШхВ, мм)</label>
+
+                         @Html.TextBoxFor(x => x.Dimensions, new { @class = "purchase" })
+                     </div>
+                 </div>
+
+
+                 @*@Html.TextBox(ViewBag.categor, new { @class = "purchase" })*@
+             </div>
+
+
+
+             @*@if (Model.DiskDiameter != null)
+        {
+            <div>
+                <label class="productFont">Мощность (Вт)</label>
+                @Html.TextBoxFor(x => x.Power, new { @class = "purchase" })
+            </div>
+            <div>
+                <label class="productFont">Максимальный диаметр диска (мм)</label>
+                @Html.TextBoxFor(x => x.DiskDiameter, new { @class = "purchase" })
+            </div>
+            <div>
+                <label class="productFont">Диаметр посадочного отверстия (мм)</label>
+                @Html.TextBoxFor(x => x.DiameterHole, new { @class = "purchase" })
+            </div>
+        }
+
+
+        @if (Model.Revs != null)
+        {
+            <div>
+                <label class="productFont">Максимальные обороты (об/мин)</label>
+                @Html.TextBoxFor(x => x.Revs, new { @class = "purchase" })
+            </div>
+            <div>
+                <label class="productFont">Напряжение сети (В)</label>
+                @Html.TextBoxFor(x => x.MainsVoltage, new { @class = "purchase" })
+            </div>
+            <div>
+                <label class="productFont">Вес (кг)</label>
+                @Html.TextBoxFor(x => x.Weight, new { @class = "purchase" })
+            </div>
+        }
+
+        @if (Model.MaximumImpact != null)
+        {
+            <div>
+                <label class="productFont">Максимальная энергия удара (Дж)</label>
+                @Html.TextBoxFor(x => x.MaximumImpact, new { @class = "purchase" })
+            </div>
+            <div>
+                <label class="productFont">Уровень шума (дБ)</label>
+                @Html.TextBoxFor(x => x.NoiseLevel, new { @class = "purchase" })
+            </div>
+            <div>
+                <label class="productFont">Габариты упакованного товара (ДxШхВ, мм)</label>
+
+                @Html.TextBoxFor(x => x.Dimensions, new { @class = "purchase" })
+            </div>
+        }*@
+
+
+         </div>
+
+            <div class="panel-footer">
+                @Html.ActionLink("Отмена", "Index", null, new { @class = "delete" })
+                <input type="submit" value="Сохранить" class="button" />
+
+            </div>
+        </div>
+
+
+    }
+</div>
+
+
+
+
+<script>
+    function showBlock(val) {
+        document.getElementById('id1').style.display = 'none';
+        document.getElementById('id2').style.display = 'none';
+        document.getElementById('id3').style.display = 'none';
+        document.getElementById('id' + val).style.display = 'block';
+    }
+
+</script>
+
+
+<script>
+    function handleFileSelect(evt) {
+        var files = evt.target.files; // FileList object
+
+        // Loop through the FileList and render image files as thumbnails.
+        for (var i = 0, f; f = files[i]; i++) {
+
+            // Only process image files.
+            if (!f.type.match('image.*')) {
+                continue;
+            }
+
+            var reader = new FileReader();
+
+            // Closure to capture the file information.
+            reader.onload = (function (theFile) {
+                return function (e) {
+                    // Render thumbnail.
+                    var span = document.createElement('span');
+                    span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                        '" title="', theFile.name, '"/>'].join('');
+                    document.getElementById('list').insertBefore(span, null);
+                };
+            })(f);
+
+            // Read in the image file as a data URL.
+            reader.readAsDataURL(f);
+        }
+    }
+
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+</script>
+
+
+<style>
+
+
+    .text-danger {
+        color: red;
+    }
+
+    .thumb {
+        height: 200px;
+        border: 1px solid #000;
+        margin: 10px 5px 0 0;
+    }
+
+
+    #id1, #id2, #id3 {
+        display: none
+    }
+
+    .productFont {
+        font-size: 22px;
+    }
+
+    .purchase {
+        margin: 0px 0px 10px 0px;
+        height: 30px;
+        width: 1900px;
+        font-size: 14px;
+    }
+
+    .Description {
+        margin: 0px 0px 10px 0px;
+        height: 30px;
+        /* min-width: 400px;*/
+        width: 1900px;
+        font-size: 14px;
+    }
+
+
+    .button {
+        border: none;
+        outline: 0;
+        padding: 9px;
+        color: #fff;
+        background-color: #36bb2d;
+        text-align: center;
+        cursor: pointer;
+        /*width: 100%;*/
+        font-size: 22px;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0px 0px 10px 40px;
+    }
+
+    .delete {
+        border: none;
+        outline: 0;
+        padding: 9px;
+        color: #fff;
+        background-color: #f44336;
+        text-align: center;
+        cursor: pointer;
+        /*width: 100%;*/
+        font-size: 22px;
+        text-decoration: none;
+        display: inline-block;
+        margin: 15px 0px 10px 800px;
+    }
+</style>
+
+

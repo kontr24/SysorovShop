@@ -1,0 +1,131 @@
+﻿@model SysorovShop.Models.User
+
+@{
+    ViewBag.Title = "DeleteUser";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Удаление пользователя "@Model.FirstName @Model.LastName"</h2>
+
+<h3>Вы уверены, что хотите удалить пользователя "@Model.FirstName @Model.LastName"?</h3>
+
+
+<hr/>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-right">Имя</th>
+            <th class="text-right">Фамилия</th>
+            <th class="text-right">Адрес электронной почты</th>
+            <th class="text-right">Логин</th>
+            <th class="text-right">Пароль</th>
+            <th class="text-right">Статус</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="text-right">@Model.FirstName</td>
+            <td class="text-right">@Model.LastName</td>
+            <td class="text-right">@Model.Email</td>
+            <td class="text-right">@Model.Username</td>
+            <td class="text-right">@Model.Password</td>
+            @if (Model.StatusID == "1")
+            {
+                <td class="text-right">Администратор</td>
+            }
+            @if (Model.StatusID == null)
+            {
+                <td class="text-right">Пользователь</td>
+            }
+
+
+        </tr>
+
+    </tbody>
+
+</table>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        @Html.ActionLink("Отмена", "ListUsers", null, new { @class = "delete" })
+        <input type="submit" value="Удалить" class="button" />
+
+    </div>
+}
+
+<style>
+    .button {
+        border: none;
+        outline: 0;
+        padding: 9px;
+        color: #fff;
+        background-color: #f44336;
+        text-align: center;
+        cursor: pointer;
+        /*width: 100%;*/
+        font-size: 22px;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0px 0px 10px 30px;
+    }
+
+    .delete {
+        border: none;
+        outline: 0;
+        padding: 9px;
+        color: #fff;
+        background-color: #36bb2d;
+        text-align: center;
+        cursor: pointer;
+        /*width: 100%;*/
+        font-size: 22px;
+        text-decoration: none;
+        display: inline-block;
+        margin: 15px 0px 10px 995px;
+    }
+
+    .table {
+        width: auto;
+        margin-bottom: 20px;
+        border: 1px solid #dddddd;
+        border-collapse: collapse;
+        margin: 0px 0px 0px 650px
+    }
+
+        .table th {
+            font-weight: bold;
+            padding: 5px;
+            background: #efefef;
+            border: 1px solid #dddddd;
+        }
+
+        .table td {
+            border: 1px solid #dddddd;
+            padding: 5px;
+        }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .text-left {
+        text-align: left;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+    h3 {
+        margin: 0px 0px 0px 660px;
+    }
+
+    h2 {
+        margin: 0px 0px 15px 700px;
+    }
+</style>

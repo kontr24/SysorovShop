@@ -1,0 +1,286 @@
+﻿@using SysorovShop.Models
+@model Product
+
+@{
+    ViewBag.Title = "Product";
+    
+}
+
+
+@*<div>@Model.Model</div>*@
+
+
+
+<div class="ProductNow">
+    <span>
+        <a href="/Home/Index">Главная</a>
+    </span><span>  — @Model.Category.Name</span>
+</div>
+
+<h2>@Model.Category.Name</h2>
+
+<div class="grid-item">
+
+    <div>
+
+        <div class="item">
+
+            @*<img src="~/Content/Images/@Model.Image" width="500px" />*@
+            @if (Model.ImageData != null)
+            {
+                <img class="img-thumbnail" width="500" height="500"
+                     src="@Url.Action("GetImage", "Home",
+               new { Model.Id })" />
+            }
+
+
+
+
+            @*<div><span>Индентификатор: </span>@Model.Id</div>*@
+            <div><span>Категория: </span>@Model.Category.Name</div>
+            <div><span>Бренд: </span>@Model.Brand</div>
+            <div><span>Модель: </span>@Model.Model</div>
+
+
+
+            @if (Model.DiameterHole > 0 || Model.Power > 0 || Model.DiameterHole > 0)
+            {
+                <div><span>Мощность: </span>@Model.Power</div>
+                <div><span>Максимальный диаметр диска: </span>@Model.DiskDiameter</div>
+                <div><span>Диаметр посадочного отверстия: </span>@Model.DiameterHole</div>
+            }
+            @if (Model.Revs > 0 || Model.MainsVoltage > 0 || Model.Weight > 0)
+            {
+                <div><span>Максимальные обороты: </span>@Model.Revs</div>
+                <div><span>Напряжение сети: </span>@Model.MainsVoltage</div>
+                <div><span>Вес: </span>@Model.Weight</div>
+            }
+            @if (Model.MaximumImpact > 0 || Model.NoiseLevel > 0)
+            {
+                <div><span>Максимальная энергия удара: </span>@Model.MaximumImpact</div>
+                <div><span>Уровень шума: </span>@Model.NoiseLevel</div>
+                if (String.IsNullOrEmpty(Model.Dimensions))
+                {
+                    return;
+                }
+                else
+                {
+                    <div><span>Габариты упакованного товара: </span>@Model.Dimensions</div>
+                }
+            }
+
+            <p class="price">@Model.Price руб.</p>
+
+
+            <div class="button">
+                @Html.ActionLink("Купить", "Checkout", "Cart", new { Id = Model.Id}, new { @class = "button" })
+            </div>
+
+
+            @*<div class="dd">
+            <div>
+                <span>Габариты упакованного товара: </span>@Model.Dimensions
+            </div>
+        </div>*@
+            @*<div><span>Габариты упакованного товара: </span>@Model.Dimensions</div>
+        </div>*@
+
+        </div>
+
+            <div class="description">
+
+                <div>
+                    <span>
+                        Описание:
+                    </span>@Model.Description
+                </div>
+
+            </div>
+
+
+        </div>
+</div>
+
+
+
+
+<style>
+    .item div > span {
+        font-weight: bold;
+    }
+
+    /* .dd:empty {
+            display:none;
+        }
+
+        .dd > div[hidden] {
+            display: none;
+        }*/
+
+
+
+    .item {
+        border: 0px solid red;
+        width: 600px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        /*        max-width: 200px;  Ограничение ширины */
+        /* margin: 0 30px 30px 0;*/
+        text-align: center;
+        font-family: sans-serif;
+        margin: 5px 0 0 600px;
+    }
+
+        .item:hover {
+            border-color: green;
+        }
+
+    .description span {
+        font-weight: bold;
+        font-size: 18pt;
+    }
+
+    .description div {
+        font-size: 15pt;
+    }
+
+
+    .description {
+        border: 1px solid red;
+        width: 600px;
+        border-radius: 5px;
+        display: flex;
+        flex-wrap: wrap-reverse;
+        margin: 5px 0 0 600px;
+    }
+
+    .grid-item {
+        display: flex;
+        flex-wrap: wrap-reverse;
+    }
+
+    .price {
+        color: #d32f2f;
+        font-size: 18px;
+    }
+
+    .button {
+        border: none;
+        outline: 0;
+        padding: 10px;
+        color: #fff;
+        background-color: #f44336;
+        text-align: center;
+        cursor: pointer;
+        /*width: 100%;*/
+        font-size: 25px;
+        text-decoration: none;
+    }
+
+    .ProductNow {
+        margin: 120px 0 10px 0px;
+        font-size: 130%;
+    
+        
+    }
+
+    h2 {
+        margin: 20px 0 10px 0px;
+    }
+
+    h1 {
+        margin: 10px 0 10px 650px;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 30px;
+        letter-spacing: 2px;
+        word-spacing: 2px;
+        color: #000000;
+        font-weight: 700;
+        text-decoration: underline solid rgb(68, 68, 68);
+        font-style: italic;
+        font-variant: small-caps;
+        text-transform: uppercase;
+        color: #FFFFFF;
+        background: #232323;
+        text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px #49ff18, 0 0 30px #49FF18, 0 0 40px #49FF18, 0 0 55px #49FF18, 0 0 75px #49ff18;
+        color: #FFFFFF;
+        background: #232323;
+    }
+
+    #content {
+        width: 1000px;
+        margin: 50px auto 0px;
+    }
+
+    #nav {
+        font-family: 'Open Sans', arial;
+    }
+
+        #nav li {
+            float: left; /* все ссылки идут слева на право */
+            position: relative;
+            list-style: none; /* убираем точки */
+            background: #ff3131;
+            width: 190px;
+        }
+
+        #nav a {
+            text-decoration: none;
+            display: block; /* делаем блочным элементов тег "a" */
+            padding: 10px 65px;
+            color: #ffffff;
+        }
+
+        #active a, #nav li:hover > a {
+            background: #b32424;
+        }
+
+        #nav ul {
+            visibility: hidden; /* скрываем выпадающее меню */
+            padding: 0;
+            position: absolute;
+        }
+
+        #nav li:hover > ul {
+            visibility: visible; /* показываем выпадающее меню при наведении */
+            position: relative;
+        }
+
+        #nav ul a {
+            padding: 18.5px 65px; /* делаем отступы выпадающего меню меньше от основного */
+        }
+
+        #nav ul li:hover {
+            background: #d92a2a;
+        }
+
+        #nav li:first-child:hover > ul {
+            left: 0px; /* при наведении на первый элемент чтобы не съежало выпадающее меню */
+        }
+
+        #nav > li {
+            border-right: 2px solid #d92a2a; /* добавляем рамку к основному меню справа */
+        }
+
+            #nav > li:last-child {
+                border-right: none; /* убираем рамку справа основного меню */
+            }
+
+            #nav > li ul li {
+                border-left: 2px solid #d92a2a; /* добавляем рамку к выпадающему меню слева */
+                border-right: 2px solid #d92a2a; /* добавляем рамку к выпадающему меню справа */
+            }
+
+        #nav li:first-child ul li, #nav li:first-child ul {
+            border-left: none; /* убираем рамку у выпадающего меню слева */
+        }
+
+        #nav li:last-child ul li, #nav li:last-child ul {
+            border-right: none; /* убираем рамку у выпадающего меню справа */
+        }
+
+        #nav li:hover > ul {
+            left: -2px; /* смещаем выпадающее меню слева от размера рамки*/
+        }
+
+</style>

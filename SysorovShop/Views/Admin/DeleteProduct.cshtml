@@ -1,0 +1,135 @@
+﻿@model SysorovShop.Models.Product
+
+@{
+    ViewBag.Title = "DeleteProduct";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Удаление товара "@Model.Brand @Model.Model"</h2>
+
+<h3>Вы уверены, что хотите удалить товар "@Model.Brand @Model.Model"?</h3>
+
+<div>
+    <hr />
+
+    <div class="grid-item">
+
+        <div>
+
+            <div class="item">
+
+
+                @*<img src="~/Content/Images/@Model.Image" width="250px" />*@
+
+                @if (Model.ImageData != null)
+                {
+                    <img class="img-thumbnail" width="250" height="250"
+                         src="@Url.Action("GetImage", "Home",
+               new { Model.Id })" />
+                }
+
+                <div><span>Категория: </span>@Model.Category.Name</div>
+                <div><span>Бренд: </span>@Model.Brand</div>
+                <div><span>Модель: </span>@Model.Model</div>
+                <p class="price">@Model.Price руб.</p>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Отмена", "Index", null, new { @class = "delete" })
+            <input type="submit" value="Удалить" class="button" />
+
+        </div>
+    }
+</div>
+
+
+
+
+
+
+<style>
+    .button {
+        border: none;
+        outline: 0;
+        padding: 9px;
+        color: #fff;
+        background-color: #f44336;
+        text-align: center;
+        cursor: pointer;
+        /*width: 100%;*/
+        font-size: 22px;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0px 0px 10px 90px;
+    }
+
+    .delete {
+        border: none;
+        outline: 0;
+        padding: 9px;
+        color: #fff;
+        background-color: #36bb2d;
+        text-align: center;
+        cursor: pointer;
+        /*width: 100%;*/
+        font-size: 22px;
+        text-decoration: none;
+        display: inline-block;
+        margin: 15px 0px 10px 760px;
+    }
+
+
+
+
+    .item div > span {
+        font-weight: bold;
+    }
+
+    .item {
+        border: 1px solid red;
+        width: 300px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        /* max-width: 200px;  Ограничение ширины */
+        margin: 0px 30px 30px 0;
+        text-align: center;
+        font-family: sans-serif;
+    }
+
+        .item:hover {
+            border-color: green;
+        }
+
+
+    .grid-item {
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        margin: 0px 0px 0px 750px;
+    }
+
+    .price {
+        color: #d32f2f;
+        font-size: 18px;
+    }
+    h3 {
+        margin: 0px 0px 0px 660px;
+    }
+    h2 {
+        margin: 0px 0px 15px 700px;
+    }
+</style>

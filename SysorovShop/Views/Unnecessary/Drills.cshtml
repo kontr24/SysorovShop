@@ -1,0 +1,99 @@
+﻿@using SysorovShop.Models
+@model List<Product>
+@{
+    ViewBag.Title = "SysorovShop";
+}
+
+<h1>Магазин электроинструментов</h1>
+<span>
+    <a href="/Home/Index">Главная</a>
+</span><span>  — Дрели</span>
+       <h2>Дрели</h2>
+
+
+    <div class="grid-item">
+
+        @foreach (Product product in Model)
+        {
+            @*<table border="1">
+                <tr>
+                    <td>*@
+        <div>
+
+            <div class="item">
+
+                @*<details>
+            <summary>@product.Brand</summary>*@
+                <img src="~/Content/Images/@product.Image" width="200px" />
+                <div><span>Индентификатор: </span>@product.Id</div>
+                <div><span>Категория: </span>@product.Categorie</div>
+                <div><span>Бренд: </span>@product.Brand</div>
+                <div><span>Модель: </span>@product.Model</div>
+                <div><span>Цена: </span>@product.Price</div>
+
+                <div><span>Максимальные обороты: </span>@product.Revs</div>
+                <div><span>Напряжение сети: </span>@product.MainsVoltage</div>
+                <div><span>Вес: </span>@product.Weight</div>
+
+
+
+                @*</details>*@
+            </div>
+            <div class="description">
+                <details>
+                    <summary>Описание</summary><div>@product.Description</div>
+                </details>
+
+            </div>
+
+            </div>
+            @*</td>
+            </tr>
+        </table>*@
+            }
+
+
+
+
+            <style>
+                .item div > span {
+                    font-weight: bold;
+                }
+
+                .item {
+                    /*border: 1px solid black;*/
+                    border: 1px solid red;
+                    width: 300px;
+                    border-radius: 5px;
+                    /* width: 300px;*/
+                }
+
+
+                    .item:hover {
+                        border-color: green;
+                    }
+
+                .description > span {
+                    font-weight: bold;
+                }
+                .description {
+                    border: 1px solid red;
+                    width: 300px;
+                    border-radius: 5px;
+                    display: flex;
+                    flex-wrap: wrap-reverse;
+                }
+                .grid-item {
+                    display: flex;
+                    flex-wrap: wrap-reverse;
+                }
+            </style>
+
+            @*<script>
+            if (@product.Power == 0)
+            {
+
+            }
+        </script>*@
+
+

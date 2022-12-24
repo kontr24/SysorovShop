@@ -1,0 +1,39 @@
+﻿@{
+    Layout = null;
+ }
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <script src="~/Scripts/jquery-1.8.0.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+</head>
+<body>
+
+    <div>
+        @if (TempData["message"] != null)
+        {
+        <div class="message">
+            @TempData["message"]
+        </div>
+        }
+
+        @RenderBody()
+    </div>
+</body>
+</html>
+
+<style>
+    .message {
+        background: #121FCF;
+        background: -webkit-linear-gradient(to right, #121FCF 100%, #CF1512 100%);
+        background: -moz-linear-gradient(to right, #121FCF 100%, #CF1512 100%);
+        background: linear-gradient(to right, #121FCF 100%, #CF1512 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 0px 0px 0px 850px;
+    }
+</style>
