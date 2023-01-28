@@ -10,7 +10,7 @@ https://cloud.mail.ru/public/dD1g/HZBkzr75D
 <p align="center">
   <a href="https://github.com/kontr24/AZUS_Transport"><img src="https://github.com/kontr24/SysorovShop/blob/37e4abd2a2a679ab5e350dd1520966fa509c9dc9/ScreenshotsApplication/Entrance.png"></img></a>
 </p>
-<h2 align="center">Вход</h2>
+<h2 align="center">Регистрация</h2>
 <p align="center">
   <a href="https://github.com/kontr24/AZUS_Transport"><img src="https://github.com/kontr24/SysorovShop/blob/e4a5457ce3c44fcb6398aabde6d37a8ac4d780c4/ScreenshotsApplication/RegistrationPage.png"></img></a>
 </p>
